@@ -24,25 +24,25 @@ dt_string = now.strftime("%B %d, %Y %I:%M %p")
 api = PyiCloudService(environ.get('user'), environ.get('pass'))
 
 
-# if api.requires_2sa:
-#     import click
-#
-#     print("Two-step authentication required. Your trusted devices are:")
-#
-#     devices = api.trusted_devices
-#     for i, device in enumerate(devices):
-#         print(f"{i}, {device.get('deviceName', 'Ping me at ')}{device.get('phoneNumber')}")
-#
-#     device = click.prompt('Which device would you like to use?', default=0)
-#     device = devices[device]
-#     if not api.send_verification_code(device):
-#         print("Failed to send verification code")
-#         sys.exit(1)
-#
-#     code = click.prompt('Please enter validation code')
-#     if not api.validate_verification_code(device, code):
-#         print("Failed to verify verification code")
-#         sys.exit(1)
+ if api.requires_2sa:
+     import click
+
+     print("Two-step authentication required. Your trusted devices are:")
+
+     devices = api.trusted_devices
+     for i, device in enumerate(devices):
+         print(f"{i}, {device.get('deviceName', 'Ping me at ')}{device.get('phoneNumber')}")
+
+     device = click.prompt('Which device would you like to use?', default=0)
+     device = devices[device]
+     if not api.send_verification_code(device):
+         print("Failed to send verification code")
+         sys.exit(1)
+
+     code = click.prompt('Please enter validation code')
+     if not api.validate_verification_code(device, code):
+         print("Failed to verify verification code")
+         sys.exit(1)
 
 
 def locate():
